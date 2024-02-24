@@ -25,8 +25,12 @@ public class Movement : MonoBehaviour
     [SerializeField] private bool isOnLadder;
     [SerializeField] private bool isAbleToJump;
 
+    private AudioManager audioManager;
+
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         Vector3 pos = transform.position;
         pos.y = 0;
         pos.x = 0;
@@ -44,7 +48,7 @@ public class Movement : MonoBehaviour
         if (collision.CompareTag("Coins"))
         {
             FindObjectOfType<GameManager>().IncreaseScore();
-            FindObjectOfType<AudioManager>().CoinSound();
+            audioManager.PlayAudio("Coin");
             collision.gameObject.SetActive(false);
         }
     }
@@ -59,6 +63,7 @@ public class Movement : MonoBehaviour
             transform.position = pos;
             transform.localScale = Vector3.one;
             manager.DecreaseLives();
+            audioManager.PlayAudio("Death");
         }
     }
 
@@ -75,6 +80,7 @@ public class Movement : MonoBehaviour
             pos.y = 0;
             transform.position = pos;
             manager.DecreaseLives();
+            audioManager.PlayAudio("Fall");
         }
 
         // Run
@@ -130,12 +136,12 @@ public class Movement : MonoBehaviour
         if (inputHorizontal != 0)
         {
             animator.SetBool("Walking", true);
-            FindObjectOfType<AudioManager>().WalkingSound();
+            audioManager.PlayAudio("Walk");
         }
         else
         {
             animator.SetBool("Walking", false);
-            FindObjectOfType<AudioManager>().StopWalkingSound();
+            audioManager.StopAudio("Walk");
         }
     }
 

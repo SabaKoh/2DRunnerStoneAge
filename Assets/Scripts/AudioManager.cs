@@ -1,33 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioHandler> audioHandlers;
 
-    [SerializeField] private AudioClip Walkingclip;
-    [SerializeField] private AudioClip Coinclip;
-
-    public void StopWalkingSound()
+    public void StopAudio(string name)
     {
-        if (!audioSource.isPlaying) return;
-        
-        audioSource.clip = Walkingclip;
-        audioSource.Stop();
+        var audio = audioHandlers.FirstOrDefault(x => x.name == name);
+
+        if (audio == null)
+        {
+            Debug.LogWarning("Can Not Find Audio");
+            return;
+        }
+
+        if (!audio.Source.isPlaying) return;
+        audio.Source.Stop();
     }
 
-    public void WalkingSound()
+    public void PlayAudio(string name)
     {
-        if (audioSource.isPlaying) return;
+        var audio = audioHandlers.FirstOrDefault(x => x.name == name);
 
-        audioSource.clip = Walkingclip;
-        audioSource.Play();
+        if (audio == null)
+        {
+            Debug.LogWarning("Can Not Find Audio");
+            return;
+        }
+
+        if (audio.Source.isPlaying) return;
+        audio.Source.clip = audio.Clip;
+        audio.Source.Play();
     }
 
-    public void CoinSound()
+    [System.Serializable]
+    public class AudioHandler
     {
-        audioSource.clip = Coinclip;
-        audioSource.Play();
+        public string name;
+        public AudioClip Clip;
+        public AudioSource Source;
     }
 }
