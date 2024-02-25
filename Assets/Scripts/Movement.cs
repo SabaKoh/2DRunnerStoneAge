@@ -74,7 +74,7 @@ public class Movement : MonoBehaviour
 
         // Fall
         Vector3 pos = transform.position;
-        if (pos.y <= -8.5)
+        if (pos.y <= -24)
         {
             pos.x = 0;
             pos.y = 0;
@@ -88,6 +88,7 @@ public class Movement : MonoBehaviour
         {
             _speed = runSpeed;
             animator.SetBool("Running", true);
+            audioManager.PlayAudio("Run");
         }
         else
         {
@@ -121,6 +122,7 @@ public class Movement : MonoBehaviour
             rb.gravityScale = 1f;
             animator.SetTrigger("Jump");
             rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+            audioManager.PlayAudio("Jump");
             isAbleToJump = false;
         }
 

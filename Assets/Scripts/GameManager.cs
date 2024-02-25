@@ -10,10 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Movement player;
 
     [SerializeField] private float livesCount = 3;
-    [SerializeField] private GameObject life2Empty;
-    [SerializeField] private GameObject life3Empty;
-    [SerializeField] private GameObject life2;
-    [SerializeField] private GameObject life3;
+    [SerializeField] private GameObject[] lives;
 
     [SerializeField] private GameObject[] eggs;
 
@@ -72,20 +69,20 @@ public class GameManager : MonoBehaviour
     {
         if (livesCount == 3)
         {
-            life2Empty.gameObject.SetActive(false);
-            life3Empty.gameObject.SetActive(false);
-            life2.gameObject.SetActive(true);
-            life3.gameObject.SetActive(true);
+            lives[0].gameObject.SetActive(false); // life 2 empty
+            lives[1].gameObject.SetActive(false); // life 3 empty
+            lives[2].gameObject.SetActive(true);  // life 2
+            lives[3].gameObject.SetActive(true);  // life 3
         }
         if (livesCount == 2)
         {
-            life3.gameObject.SetActive(false);
-            life3Empty.gameObject.SetActive(true);
+            lives[3].gameObject.SetActive(false);
+            lives[1].gameObject.SetActive(true);
         }
         if (livesCount == 1)
         {
-            life2.gameObject.SetActive(false);
-            life2Empty.gameObject.SetActive(true);
+            lives[2].gameObject.SetActive(false);
+            lives[0].gameObject.SetActive(true);
         }
         if (livesCount == 0)
         {
