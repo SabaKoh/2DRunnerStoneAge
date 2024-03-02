@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
@@ -24,6 +25,8 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private bool isOnLadder;
     [SerializeField] private bool isAbleToJump;
+
+    public GameObject WinText;
 
     private AudioManager audioManager;
 
@@ -50,6 +53,10 @@ public class Movement : MonoBehaviour
             FindObjectOfType<GameManager>().IncreaseScore();
             audioManager.PlayAudio("Coin");
             collision.gameObject.SetActive(false);
+        }
+        if (collision.name == "FinishLine")
+        {
+            StartCoroutine(WinCoroutine());
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -150,5 +157,21 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += Vector3.right * inputHorizontal * _speed * Time.deltaTime;
+    }
+
+    IEnumerator WinCoroutine()
+    {
+        WinText.gameObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(1f);
+        WinText.gameObject.SetActive(false);
+        SceneManager.LoadScene("LevelsMenu");
+    }
+
+    public void StartPos()
+    {
+        Vector3 pos = transform.position;
+        pos.y = 0;
+        pos.x = 0;
+        transform.position = pos;
     }
 }

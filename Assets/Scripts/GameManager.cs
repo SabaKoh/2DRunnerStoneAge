@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOver;
     [SerializeField] private GameObject fade;
 
+    private void Start()
+    {
+        Resume();
+    }
     public void Play()
     {
         print("play");
@@ -39,17 +43,28 @@ public class GameManager : MonoBehaviour
         player.enabled = true;
     }
 
+    public void Resume()
+    {
+        print("play");
+
+        playButton.SetActive(false);
+        gameOver.SetActive(false);
+        fade.SetActive(false);
+        Time.timeScale = 1f;
+        player.enabled = true;
+    }
+
     public void Pause()
     {
         Time.timeScale = 0f;
         player.enabled = false;
+        fade.SetActive(true);
     }
 
     public void GameOver()
     {
         playButton.SetActive(true);
         gameOver.SetActive(true);
-        fade.SetActive(true);
 
         Pause();
     }
