@@ -26,13 +26,14 @@ public class Movement : MonoBehaviour
     [SerializeField] private bool isOnLadder;
     [SerializeField] private bool isAbleToJump;
 
-    public GameObject WinText;
+    public GameObject WinTexts;
 
     private AudioManager audioManager;
 
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        WinTexts.SetActive(false);
 
         Vector3 pos = transform.position;
         pos.y = 0;
@@ -54,8 +55,9 @@ public class Movement : MonoBehaviour
             audioManager.PlayAudio("Coin");
             collision.gameObject.SetActive(false);
         }
-        if (collision.name == "FinishLine")
+        if (collision.name == "TemporaryFinLine")
         {
+            // WinTexts.gameObject.SetActive(true);
             StartCoroutine(WinCoroutine());
         }
     }
@@ -161,10 +163,8 @@ public class Movement : MonoBehaviour
 
     IEnumerator WinCoroutine()
     {
-        WinText.gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(1f);
-        WinText.gameObject.SetActive(false);
-        SceneManager.LoadScene("LevelsMenu");
+        yield return new WaitForSecondsRealtime(2f);
+        WinTexts.gameObject.SetActive(true);
     }
 
     public void StartPos()

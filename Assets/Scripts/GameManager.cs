@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -21,9 +22,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOver;
     [SerializeField] private GameObject fade;
 
+    [SerializeField] private int getActiveScene;
+
     private void Start()
     {
         Resume();
+        getActiveScene = SceneManager.GetActiveScene().buildIndex + 1;
     }
     public void Play()
     {
@@ -78,6 +82,11 @@ public class GameManager : MonoBehaviour
     public void DecreaseLives()
     {
         livesCount--;
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(getActiveScene);
     }
 
     public void Update()

@@ -49,4 +49,9 @@ public class Buttons : MonoBehaviour
         SettingsBtns.SetActive(false);
         FindObjectOfType<GameManager>().Resume();
     }
+
+    public void NextLevel()
+    {
+        FindObjectOfType<GameManager>().LoadNextLevel();
+    }
 }
