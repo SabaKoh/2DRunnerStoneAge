@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class Movement : MonoBehaviour
 {
@@ -55,9 +56,8 @@ public class Movement : MonoBehaviour
             audioManager.PlayAudio("Coin");
             collision.gameObject.SetActive(false);
         }
-        if (collision.name == "TemporaryFinLine")
+        if (collision.name == "FinishLine")
         {
-            // WinTexts.gameObject.SetActive(true);
             StartCoroutine(WinCoroutine());
         }
     }
@@ -160,13 +160,11 @@ public class Movement : MonoBehaviour
     {
         transform.position += Vector3.right * inputHorizontal * _speed * Time.deltaTime;
     }
-
     IEnumerator WinCoroutine()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         WinTexts.gameObject.SetActive(true);
     }
-
     public void StartPos()
     {
         Vector3 pos = transform.position;
